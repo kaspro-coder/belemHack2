@@ -4,7 +4,7 @@ import { DependencyLayer } from "@/lib/types";
 
 interface DependencyNodeProps {
   layer: DependencyLayer;
-  onClick: (layerId: number) => void;
+  onClick: (layerId: string) => void;
   disabled: boolean;
 }
 

@@ -125,12 +125,30 @@ export default function HomePage() {
           slippage: response.slippage,
           expectedLoss: response.expected_loss,
           action: response.action,
+          warnings: response.warnings,
+          dataProvenance: response.data_provenance,
         };
+        
+        console.log("Données reçues :", response);
         setVerdict(newVerdict);
         setBaselineVerdict(newVerdict);
 
-        // Reset layers to clean state after a fresh analysis
-        setLayers(getInitialLayers());
+        // Update layers from dynamic backend nodes instead of local fallback
+        if (response.nodes && response.nodes.length > 0) {
+          // Normalize nodes to DependencyLayer format handled by UI
+          const fetchedLayers = response.nodes.map(n => ({
+            id: n.id,
+            name: n.name,
+            label: n.label,
+            tvl: n.tvl,
+            financial_exposure: n.financial_exposure,
+            severity: n.severity,
+            compromised: false,
+          }));
+          setLayers(fetchedLayers);
+        } else {
+          setLayers(getInitialLayers());
+        }
       } catch (err: unknown) {
         const errMsg =
           err instanceof Error ? err.message : "Unknown error occurred";
@@ -148,7 +166,7 @@ export default function HomePage() {
 
   // ------ HACK SIMULATION ------
   const handleNodeClick = useCallback(
-    (layerId: number) => {
+    (layerId: string) => {
       if (isAnalyzing || isSimulating) return;
       setIsSimulating(true);
 

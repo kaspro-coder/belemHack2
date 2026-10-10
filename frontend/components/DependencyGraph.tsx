@@ -5,7 +5,7 @@ import DependencyNode from "./DependencyNode";
 
 interface DependencyGraphProps {
   layers: DependencyLayer[];
-  onNodeClick: (layerId: number) => void;
+  onNodeClick: (layerId: string) => void;
   onReset: () => void;
   disabled: boolean;
 }

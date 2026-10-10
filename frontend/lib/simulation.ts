@@ -22,11 +22,11 @@ export const ACTION_THRESHOLD = 30_000;
  * compromising a high-severity layer produces EXIT.
  */
 const DEFAULT_LAYERS: DependencyLayer[] = [
-  { id: 1, name: "SETTLEMENT", label: "LAYER 1 — SETTLEMENT", tvl: 500_000, severity: 0.3, compromised: false },
-  { id: 2, name: "YIELD",      label: "LAYER 2 — YIELD",      tvl: 300_000, severity: 0.5, compromised: false },
-  { id: 3, name: "ORACLE",     label: "LAYER 3 — ORACLE",     tvl: 100_000, severity: 1.0, compromised: false },
-  { id: 4, name: "AMM",        label: "LAYER 4 — AMM",        tvl: 200_000, severity: 0.7, compromised: false },
-  { id: 5, name: "LENDING",    label: "LAYER 5 — LENDING",    tvl: 150_000, severity: 0.8, compromised: false },
+  { id: "1", name: "SETTLEMENT", label: "LAYER 1 — SETTLEMENT", tvl: 500_000, financial_exposure: 500_000, severity: 0.3, compromised: false },
+  { id: "2", name: "YIELD",      label: "LAYER 2 — YIELD",      tvl: 300_000, financial_exposure: 300_000, severity: 0.5, compromised: false },
+  { id: "3", name: "ORACLE",     label: "LAYER 3 — ORACLE",     tvl: 100_000, financial_exposure: 100_000, severity: 1.0, compromised: false },
+  { id: "4", name: "AMM",        label: "LAYER 4 — AMM",        tvl: 200_000, financial_exposure: 200_000, severity: 0.7, compromised: false },
+  { id: "5", name: "LENDING",    label: "LAYER 5 — LENDING",    tvl: 150_000, financial_exposure: 150_000, severity: 0.8, compromised: false },
 ];
 
 // Quick sanity: Layer 1 alone → 500000*0.3 = 150000 > 30000 → EXIT
@@ -48,7 +48,7 @@ export function getDefaultVerdict(): VerdictMetrics {
  * Returns the updated layers array (new references).
  */
 export function simulateHack(
-  layerId: number,
+  layerId: string,
   layers: DependencyLayer[]
 ): DependencyLayer[] {
   return layers.map((l) =>

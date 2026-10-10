@@ -11,19 +11,30 @@ export interface AnalyzeRequest {
 export interface AnalyzeResponse {
   status: string;
   token_address: string;
-  slippage: number;
+  slippage: number | null;
   expected_loss: number;
   action: string;
+  warnings: string[];
+  data_provenance: string | Record<string, string>;
+  nodes: DependencyLayer[];
+  edges: DependencyEdge[];
 }
 
-/** A single dependency layer in the 5-layer model */
+/** A single dependency layer / node */
 export interface DependencyLayer {
-  id: number;
+  id: string; // "L1", "L2", etc
   name: string;
   label: string;
-  tvl: number; // mock Total Value Locked (illustrative)
-  severity: number; // 0.0 – 1.0  (illustrative)
-  compromised: boolean;
+  tvl: number; // metadata
+  financial_exposure: number;
+  severity: number;
+  compromised?: boolean; // Managed locally
+}
+
+export interface DependencyEdge {
+  source_id: string;
+  target_id: string;
+  exposure_weight: number;
 }
 
 /** Aggregated risk verdict metrics */
@@ -31,6 +42,8 @@ export interface VerdictMetrics {
   slippage: number | null;
   expectedLoss: number | null;
   action: string | null;
+  warnings?: string[];
+  dataProvenance?: string | Record<string, string> | null;
 }
 
 /** A single terminal log entry */

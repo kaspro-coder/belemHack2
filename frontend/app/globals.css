@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
+}
+
+body {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* Remove all rounded corners globally */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
+/* Remove default focus ring, replace with simple outline */
+*:focus {
+  outline: 1px solid #000000;
+  outline-offset: 1px;
+}
+
+/* Button resets */
+button {
+  cursor: pointer;
+  font-family: "Courier New", Courier, monospace;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+input {
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Details/summary styling */
+details summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
